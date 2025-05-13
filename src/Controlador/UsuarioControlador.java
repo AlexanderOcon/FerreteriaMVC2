@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import DAO.UsuarioDAO;
@@ -10,10 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author COMPHP
- */
+
 public class UsuarioControlador {
 
     private final UsuarioDAO usuarioDAO;
@@ -67,29 +60,5 @@ public class UsuarioControlador {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    // Método main para pruebas
-    public static void main(String[] args) {
-        UsuarioControlador controlador = new UsuarioControlador();
-
-        // Crear un usuario
-        controlador.crearUsuario("ana", "ana2025");
-
-        // Leer todos los usuarios
-        List<Usuario> usuarios = controlador.obtenerTodosUsuarios();
-        if (usuarios != null) {
-            System.out.println("Lista de usuarios:");
-            for (Usuario u : usuarios) {
-                System.out.println("ID: " + u.getIdUsuario()
-                        + ", Usuario: " + u.getUsuario());
-            }
-        }
-
-        // Actualizar un usuario (suponiendo que ID 1 existe)
-        controlador.actualizarUsuario(1, "ana_maria", "nueva2025");
-
-        // Eliminar un usuario
-        controlador.eliminarUsuario(1);
     }
 }

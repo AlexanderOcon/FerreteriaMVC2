@@ -1,20 +1,60 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Vista;
 
-/**
- *
- * @author COMPHP
- */
-public class VistaEmpleados extends javax.swing.JPanel {
+import Controlador.EmpleadoControlador;
+import Modelo.Empleado;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+import javax.swing.JTextField;
 
-    /**
-     * Creates new form VistaEmpleado
-     */
-    public VistaEmpleados() {
+public class VistaEmpleados extends javax.swing.JPanel {
+    
+    private final EmpleadoControlador EmpleadoControlador;
+    
+    private Integer idEmpleadoSeleccionado = null;
+    
+       public VistaEmpleados() {
         initComponents();
+        this.EmpleadoControlador = new EmpleadoControlador();
+        selectorfechaContratacion.setDate(new Date());
+        ((JTextField) selectorfechaContratacion.getDateEditor().getUiComponent()).setEditable(false);
+        cargarDatosTabla();
+    }
+
+    private void cargarDatosTabla() {
+        
+        List <Empleado> empleados = EmpleadoControlador.obtenerTodosEmpleados();
+        
+        if (empleados != null) {
+            DefaultTableModel model = (DefaultTableModel) TablaEmpleados.getModel();
+            model.setRowCount(0);
+            for (Empleado emp : empleados) {
+                Object[] row = {
+                    emp.getIdEmpleado(),
+                    emp.getPrimerNombre(),
+                    emp.getSegundoNombre(),
+                    emp.getPrimerApellido(),
+                    emp.getSegundoApellido(),
+                    emp.getCelular(),
+                    emp.getCargo(),
+                    emp.getFechaContratacion()
+                };
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void limpiar() {
+        textPrimerNombre.setText("");
+        textSegundoNombre.setText("");
+        textPrimerApellido.setText("");
+        textSegundoApellido.setText("");
+        textCelular.setText("");
+        textBuscar.setText("");
+        idEmpleadoSeleccionado = null;
+        selectorfechaContratacion.setDate(new Date());
+        BtnEliminar.setEnabled(true);
+        BtnGuaradar.setEnabled(true);
     }
 
     /**
@@ -27,79 +67,74 @@ public class VistaEmpleados extends javax.swing.JPanel {
     private void initComponents() {
 
         jlabel1 = new javax.swing.JLabel();
-        primer_nombre = new javax.swing.JTextField();
+        textPrimerNombre = new javax.swing.JTextField();
         jlabel2 = new javax.swing.JLabel();
-        segundo_nombre = new javax.swing.JTextField();
+        textSegundoNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        primer_apellido = new javax.swing.JTextField();
+        textPrimerApellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        segundo_apellido = new javax.swing.JTextField();
+        textSegundoApellido = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        celular = new javax.swing.JTextField();
+        textCelular = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        cargo = new javax.swing.JTextField();
-        Guaradar = new javax.swing.JButton();
+        BtnGuaradar = new javax.swing.JButton();
         Buscar = new javax.swing.JButton();
-        BuscarEmpleado = new javax.swing.JTextField();
-        Eliminar = new javax.swing.JButton();
-        Actualizar = new javax.swing.JButton();
-        fecha_contratacion = new javax.swing.JTextField();
+        textBuscar = new javax.swing.JTextField();
+        BtnEliminar = new javax.swing.JButton();
+        BtnActualizar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaEmpleados = new javax.swing.JTable();
+        selectorfechaContratacion = new com.toedter.calendar.JDateChooser();
+        BtnLimpiar = new javax.swing.JButton();
+        ComboCargo = new javax.swing.JComboBox<>();
 
-        jlabel1.setText("primer_nombre");
+        jlabel1.setText("Primer_nombre");
 
-        primer_nombre.addActionListener(new java.awt.event.ActionListener() {
+        textPrimerNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                primer_nombreActionPerformed(evt);
+                textPrimerNombreActionPerformed(evt);
             }
         });
 
-        jlabel2.setText("segundo_nombre");
+        jlabel2.setText("Segundo_nombre");
 
-        segundo_nombre.addActionListener(new java.awt.event.ActionListener() {
+        textSegundoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                segundo_nombreActionPerformed(evt);
+                textSegundoNombreActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("primer_apellido");
+        jLabel3.setText("Primer_apellido");
 
-        primer_apellido.addActionListener(new java.awt.event.ActionListener() {
+        textPrimerApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                primer_apellidoActionPerformed(evt);
+                textPrimerApellidoActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("segundo_apellido");
+        jLabel4.setText("Segundo_apellido");
 
-        segundo_apellido.addActionListener(new java.awt.event.ActionListener() {
+        textSegundoApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                segundo_apellidoActionPerformed(evt);
+                textSegundoApellidoActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("celular");
+        jLabel5.setText("Celular");
 
-        celular.addActionListener(new java.awt.event.ActionListener() {
+        textCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                celularActionPerformed(evt);
+                textCelularActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("cargo");
+        jLabel6.setText("Cargo");
 
-        cargo.addActionListener(new java.awt.event.ActionListener() {
+        BtnGuaradar.setText("Guardar");
+        BtnGuaradar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cargoActionPerformed(evt);
-            }
-        });
-
-        Guaradar.setText("Guardar");
-        Guaradar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuaradarActionPerformed(evt);
+                BtnGuaradarActionPerformed(evt);
             }
         });
 
@@ -110,46 +145,64 @@ public class VistaEmpleados extends javax.swing.JPanel {
             }
         });
 
-        BuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        textBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscarEmpleadoActionPerformed(evt);
+                textBuscarActionPerformed(evt);
+            }
+        });
+        textBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtBuscar(evt);
             }
         });
 
-        Eliminar.setText("Eliminar");
-        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EliminarActionPerformed(evt);
+                BtnEliminarActionPerformed(evt);
             }
         });
 
-        Actualizar.setText("Actualizar");
-        Actualizar.addActionListener(new java.awt.event.ActionListener() {
+        BtnActualizar.setText("Actualizar");
+        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActualizarActionPerformed(evt);
+                BtnActualizarActionPerformed(evt);
             }
         });
 
-        fecha_contratacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fecha_contratacionActionPerformed(evt);
-            }
-        });
+        jLabel7.setText("Fecha_Contratacion");
 
-        jLabel7.setText("fecha_contratacion");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Empleado", "Nombre 1", "Nombre 2", "Apelldio 1", "Apellido 2", "Celular", "Cargo", "Fecha_Contratacion"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        TablaEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaEmpleadosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaEmpleados);
+
+        BtnLimpiar.setText("Limpiar");
+        BtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarActionPerformed(evt);
+            }
+        });
+
+        ComboCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor ", "Administardor", "Cajero", "Empleado" }));
+        ComboCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboCargoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -159,47 +212,48 @@ public class VistaEmpleados extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(textCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textPrimerNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(primer_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(segundo_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(primer_apellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(ComboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(segundo_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(selectorfechaContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(textBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(fecha_contratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Guaradar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(BuscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(textSegundoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textPrimerApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textSegundoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 47, Short.MAX_VALUE))
+                                .addComponent(BtnGuaradar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -214,117 +268,216 @@ public class VistaEmpleados extends javax.swing.JPanel {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(primer_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(segundo_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textPrimerApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textSegundoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jlabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(segundo_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textSegundoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jlabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(primer_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(textPrimerNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnGuaradar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectorfechaContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Guaradar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(fecha_contratacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(ComboCargo))))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BuscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void primer_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primer_nombreActionPerformed
+    private void textPrimerNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPrimerNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_primer_nombreActionPerformed
+    }//GEN-LAST:event_textPrimerNombreActionPerformed
 
-    private void segundo_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segundo_nombreActionPerformed
+    private void textSegundoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSegundoNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_segundo_nombreActionPerformed
+    }//GEN-LAST:event_textSegundoNombreActionPerformed
 
-    private void primer_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primer_apellidoActionPerformed
+    private void textPrimerApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPrimerApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_primer_apellidoActionPerformed
+    }//GEN-LAST:event_textPrimerApellidoActionPerformed
 
-    private void segundo_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segundo_apellidoActionPerformed
+    private void textSegundoApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSegundoApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_segundo_apellidoActionPerformed
+    }//GEN-LAST:event_textSegundoApellidoActionPerformed
 
-    private void celularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celularActionPerformed
+    private void textCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCelularActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_celularActionPerformed
+    }//GEN-LAST:event_textCelularActionPerformed
 
-    private void cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cargoActionPerformed
+    private void BtnGuaradarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuaradarActionPerformed
+        Date fecha = this.selectorfechaContratacion.getDate();
+        java.sql.Date fechaContratacion = new java.sql.Date(fecha.getTime());
+        String primerNombre = textPrimerNombre.getText();
+        String segundoNombre = textSegundoNombre.getText();
+        String primerApellido = textPrimerApellido.getText();
+        String segundoApellido = textSegundoApellido.getText();
+        String celular = textCelular.getText();
+        String cargo = (String) ComboCargo.getSelectedItem();
 
-    private void GuaradarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuaradarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GuaradarActionPerformed
+        if (!primerNombre.isEmpty() && !primerApellido.isEmpty() && !celular.isEmpty() && !cargo.isEmpty()) {
+            try {
+                EmpleadoControlador.crearEmpleado(primerNombre, segundoNombre, primerApellido, segundoApellido, celular, cargo, fechaContratacion);
+                limpiar();
+                cargarDatosTabla();
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Llene los campos requeridos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnGuaradarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BuscarActionPerformed
 
-    private void BuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarEmpleadoActionPerformed
+    private void textBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BuscarEmpleadoActionPerformed
+    }//GEN-LAST:event_textBuscarActionPerformed
 
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EliminarActionPerformed
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
-    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ActualizarActionPerformed
+    private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
+        String primerNombre = textPrimerNombre.getText();
+        String segundoNombre = textSegundoNombre.getText();
+        String primerApellido = textPrimerApellido.getText();
+        String segundoApellido = textSegundoApellido.getText();
+        String celular = textCelular.getText();
+        String cargo = (String) ComboCargo.getSelectedItem();
+        Date fecha = this.selectorfechaContratacion.getDate();
+        java.sql.Date fechaContratacion = new java.sql.Date(fecha.getTime());
 
-    private void fecha_contratacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecha_contratacionActionPerformed
+        if (idEmpleadoSeleccionado != null && !primerNombre.isEmpty() && !primerApellido.isEmpty() && !celular.isEmpty()) {
+            try {
+                EmpleadoControlador.actualizarEmpleado(idEmpleadoSeleccionado, primerNombre, segundoNombre, primerApellido, segundoApellido, celular, cargo, fechaContratacion);
+                cargarDatosTabla();
+                limpiar();
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Llene los campos obligatorios.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void BtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fecha_contratacionActionPerformed
+    }//GEN-LAST:event_BtnLimpiarActionPerformed
+
+    private void tablaEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMouseClicked
+        if (evt.getClickCount() == 2) {
+            int filaSeleccionada = TablaEmpleados.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                idEmpleadoSeleccionado = (int) TablaEmpleados.getValueAt(filaSeleccionada, 0);
+                String primerNombre = (String) TablaEmpleados.getValueAt(filaSeleccionada, 1);
+                String segundoNombre = (String) TablaEmpleados.getValueAt(filaSeleccionada, 2);
+                String primerApellido = (String) TablaEmpleados.getValueAt(filaSeleccionada, 3);
+                String segundoApellido = (String) TablaEmpleados.getValueAt(filaSeleccionada, 4);
+                String celular = (String) TablaEmpleados.getValueAt(filaSeleccionada, 5);
+                String cargo = (String) TablaEmpleados.getValueAt(filaSeleccionada, 6);
+                Date fecha = (Date) TablaEmpleados.getValueAt(filaSeleccionada, 7);
+
+                textPrimerNombre.setText(primerNombre);
+                textSegundoNombre.setText(segundoNombre != null ? segundoNombre : "");
+                textPrimerApellido.setText(primerApellido);
+                textSegundoApellido.setText(segundoApellido != null ? segundoApellido : "");
+                textCelular.setText(celular);
+                ComboCargo.setSelectedItem(cargo != null ? cargo : "Seleccionar");
+                selectorfechaContratacion.setDate(fecha);
+
+                BtnEliminar.setEnabled(false);
+                BtnGuaradar.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_tablaEmpleadosMouseClicked
+
+    private void TxtBuscar(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscar
+        String textoBusqueda = textBuscar.getText().trim().toLowerCase();
+        List<Empleado> empleados = EmpleadoControlador.obtenerTodosEmpleados();
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaEmpleados.getModel();
+        modelo.setRowCount(0);
+
+        if (empleados != null) {
+            for (Empleado emp : empleados) {
+                if (textoBusqueda.isEmpty()
+                        || emp.getPrimerNombre().toLowerCase().contains(textoBusqueda)
+                        || (emp.getSegundoNombre() != null && emp.getSegundoNombre().toLowerCase().contains(textoBusqueda))
+                        || emp.getPrimerApellido().toLowerCase().contains(textoBusqueda)
+                        || (emp.getSegundoApellido() != null && emp.getSegundoApellido().toLowerCase().contains(textoBusqueda))
+                        || emp.getCelular().toLowerCase().contains(textoBusqueda)
+                        || emp.getCargo().toLowerCase().contains(textoBusqueda)) {
+
+                    Object[] fila = {
+                        emp.getIdEmpleado(),
+                        emp.getPrimerNombre(),
+                        emp.getSegundoNombre(),
+                        emp.getPrimerApellido(),
+                        emp.getSegundoApellido(),
+                        emp.getCelular(),
+                        emp.getCargo(),
+                        emp.getFechaContratacion()
+                    };
+                    modelo.addRow(fila);
+                }
+            }
+        }
+    }//GEN-LAST:event_TxtBuscar
+
+    private void ComboCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboCargoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Actualizar;
+    private javax.swing.JButton BtnActualizar;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnGuaradar;
+    private javax.swing.JButton BtnLimpiar;
     private javax.swing.JButton Buscar;
-    private javax.swing.JTextField BuscarEmpleado;
-    private javax.swing.JButton Eliminar;
-    private javax.swing.JButton Guaradar;
-    private javax.swing.JTextField cargo;
-    private javax.swing.JTextField celular;
-    private javax.swing.JTextField fecha_contratacion;
+    private javax.swing.JComboBox<String> ComboCargo;
+    private javax.swing.JTable TablaEmpleados;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlabel1;
     private javax.swing.JLabel jlabel2;
-    private javax.swing.JTextField primer_apellido;
-    private javax.swing.JTextField primer_nombre;
-    private javax.swing.JTextField segundo_apellido;
-    private javax.swing.JTextField segundo_nombre;
+    private com.toedter.calendar.JDateChooser selectorfechaContratacion;
+    private javax.swing.JTextField textBuscar;
+    private javax.swing.JTextField textCelular;
+    private javax.swing.JTextField textPrimerApellido;
+    private javax.swing.JTextField textPrimerNombre;
+    private javax.swing.JTextField textSegundoApellido;
+    private javax.swing.JTextField textSegundoNombre;
     // End of variables declaration//GEN-END:variables
 }

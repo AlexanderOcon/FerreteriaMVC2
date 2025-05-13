@@ -1,20 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Vista;
 
-/**
- *
- * @author COMPHP
- */
+import Controlador.CategoriaControlador;
+import Modelo.Categoria;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class VistaCategorias extends javax.swing.JPanel {
 
-    /**
-     * Creates new form VistaCategorias
-     */
+    private final CategoriaControlador categoriaControlador;
+
+private void cargarDatosTabla() {
+    // Obtener todas las categorías del controlador
+    List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
+
+    if (categorias != null) {
+        // Obtener el modelo existente de la tabla
+        DefaultTableModel model = (DefaultTableModel) tablaCategorias.getModel();
+        // Limpiar las filas existentes
+        model.setRowCount(0);
+
+        // Llenar las filas con los datos de las categorías
+        for (Categoria cat : categorias) {
+            Object[] row = {
+                cat.getIdCategoria(),
+                cat.getNombreCategoria(),
+                cat.getDescripcionCategoria()
+            };
+            model.addRow(row);
+        }
+    }
+}    
+    
     public VistaCategorias() {
         initComponents();
+        this.categoriaControlador = new CategoriaControlador();
+        cargarDatosTabla();
     }
 
     /**
@@ -36,7 +56,7 @@ public class VistaCategorias extends javax.swing.JPanel {
         Eliminar = new javax.swing.JButton();
         BuscarTEXT = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaCategorias = new javax.swing.JTable();
 
         jLabel1.setText("NombreCatategoria");
 
@@ -57,10 +77,20 @@ public class VistaCategorias extends javax.swing.JPanel {
         Buscar.setText("Buscar");
 
         Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accionBotonGuardar(evt);
+            }
+        });
 
         Actualizar.setText("Actualizar");
 
         Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accionBotonEliminar(evt);
+            }
+        });
 
         BuscarTEXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,19 +98,19 @@ public class VistaCategorias extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Categoria", "Nombre", "Descripcion"
             }
         ));
-        jTable1.setPreferredSize(new java.awt.Dimension(300, 230));
-        jScrollPane1.setViewportView(jTable1);
+        tablaCategorias.setPreferredSize(new java.awt.Dimension(300, 230));
+        jScrollPane1.setViewportView(tablaCategorias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,9 +131,7 @@ public class VistaCategorias extends javax.swing.JPanel {
                                         .addComponent(DescripcionCtegoria, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(DescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(79, 79, 79))))
+                                    .addComponent(DescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(BuscarTEXT, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,6 +186,30 @@ public class VistaCategorias extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BuscarTEXTActionPerformed
 
+    private void accionBotonGuardar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionBotonGuardar
+        String nombre = NombreCategoria.getText();
+        String descripcion = DescripcionCategoria.getText();
+
+        if (!nombre.isEmpty() && !descripcion.isEmpty()) {
+            categoriaControlador.crearCategoria(nombre, descripcion);
+            cargarDatosTabla();
+            NombreCategoria.setText("");
+            DescripcionCategoria.setText("");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_accionBotonGuardar
+
+    private void accionBotonEliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionBotonEliminar
+        int filaSeleccionada = tablaCategorias.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int idCategoria = (int) tablaCategorias.getValueAt(filaSeleccionada, 0);
+            categoriaControlador.eliminarCategoria(idCategoria);
+            cargarDatosTabla();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_accionBotonEliminar
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
@@ -170,6 +222,6 @@ public class VistaCategorias extends javax.swing.JPanel {
     private javax.swing.JTextField NombreCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaCategorias;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import DAO.VentaDAO;
@@ -14,10 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author COMPHP
- */
+
 public class VentaControlador {
 
     private final VentaDAO ventaDAO;
@@ -88,39 +81,5 @@ public class VentaControlador {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar la venta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    // Método main para pruebas
-    public static void main(String[] args) {
-        VentaControlador controlador = new VentaControlador();
-
-        // Crear una lista de detalles de venta
-        List<DetalleVenta> detalles = new ArrayList<>();
-        DetalleVenta detalle1 = new DetalleVenta();
-        detalle1.setIdProducto(1);
-        detalle1.setCantidad(11);
-        detalle1.setPrecioUnitario(33.22f);
-        detalles.add(detalle1);
-
-        // Crear una venta con detalles
-        controlador.crearVenta(1, 1, new Date(), 555.44f, detalles);
-
-        // Leer todas las ventas
-        List<Venta> ventas = controlador.obtenerTodasVentas();
-        if (ventas != null) {
-            System.out.println("Lista de ventas:");
-            for (Venta v : ventas) {
-                System.out.println("ID: " + v.getIdVenta()
-                        + ", Cliente: " + v.getIdCliente()
-                        + ", Total: " + v.getTotalVenta());
-            }
-        }
-
-        // Actualizar una venta (suponiendo que ID 1 existe)
-        controlador.actualizarVenta(1, 5, 4, new Date(), 600.75f);
-
-        // Eliminar una venta
-        controlador.eliminarVenta(1);
-
     }
 }

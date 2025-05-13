@@ -68,16 +68,4 @@ public class CategoriaControlador {
             JOptionPane.showMessageDialog(null, "Error al eliminar la categoría: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    public static void main(String[] args) {
-        CategoriaControlador controlador = new CategoriaControlador();
-        // Probar crear categoría
-        controlador.crearCategoria("Jardinería", "Productos para el jardin.");
-        // Probar leer categorías
-        List<Categoria> categorias = controlador.obtenerTodasCategorias();
-        for (Categoria cat : categorias) {
-            System.out.println("ID: " + cat.getIdCategoria() + ", Nombre: " + cat.getNombreCategoria());
-        }
-    }
-
 }
