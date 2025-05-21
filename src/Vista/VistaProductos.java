@@ -9,22 +9,20 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VistaProductos extends javax.swing.JPanel {
-    
+
     private final ProductoControlador productoControlador;
     private Integer idProductoSeleccionado = null;
-    
     private final CategoriaControlador categoriaControlador;
     private Integer idCategoriaSeleccionada = null;
-    
-      public VistaProductos() {
+
+    public VistaProductos() {
         initComponents();
         this.productoControlador = new ProductoControlador();
         this.categoriaControlador = new CategoriaControlador();
         cargarDatosTabla();
         cargarCategorias();
-        eventoComboCategorias();
     }
-      
+
     private void cargarDatosTabla() {
         List<Producto> productos = productoControlador.obtenerTodosProductos();
         if (productos != null) {
@@ -43,16 +41,16 @@ public class VistaProductos extends javax.swing.JPanel {
                 model.addRow(row);
             }
         }
-}
-    
+    }
+
     private void cargarCategorias() {
         try {
-        // Obtener las categorías desde el controlador
+// Obtener las categorías desde el controlador
             List<Categoria> categorias
                     = categoriaControlador.obtenerTodasCategorias();
-        // Limpiar el combo box por si tiene datos
+// Limpiar el combo box por si tiene datos
             ComboCategoria.removeAllItems();
-        // Agregar cada categoría al combo box
+// Agregar cada categoría al combo box
             for (Categoria cat : categorias) {
                 ComboCategoria.addItem(cat.getNombreCategoria());
             }
@@ -61,62 +59,61 @@ public class VistaProductos extends javax.swing.JPanel {
                     "Error al cargar las categorías: " + e.getMessage());
         }
     }
-    
-    
+
     private void eventoComboCategorias() {
-    ComboCategoria.addActionListener(e -> {
-        // Obtener el indice seleccionado
-        int indiceSeleccionado = ComboCategoria.getSelectedIndex();
-        if (indiceSeleccionado >= 0) { // Verificar que se haya seleccionado algo
-            try {
-                // Obtener la lista de categorias desde el controlador o memoria
-                List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
-                // Obtener el objeto de categoria correspondiente al indice seleccionado
-                Categoria categoriaSeleccionada = categorias.get(indiceSeleccionado);
-                // Actualizar la variable global con el ID de la categoria seleccionada
-                idCategoriaSeleccionada = categoriaSeleccionada.getIdCategoria();
-                // Mostrar el ID seleccionado en la consola (puedes quitar esta linea)
-                System.out.println("ID de la categoria seleccionada: " + idCategoriaSeleccionada);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al seleccionar categoria: " + ex.getMessage());
+        ComboCategoria.addActionListener(e -> {
+            // Obtener el índice seleccionado
+            int indiceSeleccionado = ComboCategoria.getSelectedIndex();
+
+            if (indiceSeleccionado >= 0) { // Verificar que se haya seleccionado algo
+                try {
+                    // Obtener la lista de categorías desde el controlador o memoria
+                    List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
+
+                    // Obtener el objeto de categoría correspondiente al índice seleccionado
+                    Categoria categoriaSeleccionada = categorias.get(indiceSeleccionado);
+
+                    // Actualizar la variable global con el ID de la categoría seleccionada
+                    idCategoriaSeleccionada = categoriaSeleccionada.getIdCategoria();
+
+                    // Mostrar el ID seleccionado en la consola (puedes quitar esta línea)
+                    System.out.println("ID de la categoría seleccionada: " + idCategoriaSeleccionada);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al seleccionar categoría: " + ex.getMessage());
+                }
             }
-        }
-    });
-}
-    
-    
-    private void seleccionarCategoriaEnConbo(Integer idCategoria) {
-    try {
-        // Obtener las categorías desde el controlador
-        List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
-        
-        // Recorrer las categortas y buscar la que coincida con el ID
-        for (int i = 0; i < categorias.size(); i++) {
-            Categoria categoria = categorias.get(i);
-            if (categoria.getIdCategoria() == idCategoria) {
-                ComboCategoria.setSelectedIndex(i);
-                break;
-            }
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al seleccionar categoria: " + e.getMessage());
+        });
     }
-}
-    
-        private void limpiar() {
+
+    private void seleccionarCategoriaEnCombo(Integer idCategoria) {
+        try {
+            // Obtener las categorías desde el controlador
+            List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
+
+            // Recorrer las categorías y buscar la que coincida con el ID
+            for (int i = 0; i < categorias.size(); i++) {
+                Categoria categoria = categorias.get(i);
+                if (categoria.getIdCategoria() == idCategoria) {
+                    ComboCategoria.setSelectedIndex(i);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al seleccionar categoría: " + e.getMessage());
+        }
+    }
+
+    private void limpiar() {
         txtNombreProducto.setText("");
         txtDescripcionProducto.setText("");
         txtPrecioUnitario.setText("");
         txtStock.setText("");
         txtImagen.setText("");
-        ComboCategoria = null;
+        txtBuscarProducto.setText("");
         idProductoSeleccionado = null;
-        txtEliminar.setEnabled(true);
-        txtGuardar.setEnabled(true);
+        BtnEliminar.setEnabled(true);
+        BtnGuardar.setEnabled(true);
     }
-        
-  
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -132,16 +129,16 @@ public class VistaProductos extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtImagen = new javax.swing.JTextField();
-        txtGuardar = new javax.swing.JButton();
-        txtActualizar = new javax.swing.JButton();
-        txtEliminar = new javax.swing.JButton();
+        BtnGuardar = new javax.swing.JButton();
+        BtnActualizar = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
         Buscar = new javax.swing.JButton();
         txtBuscarProducto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         ComboCategoria = new javax.swing.JComboBox<>();
-        txtLimpiar = new javax.swing.JButton();
+        BtnLimpiar = new javax.swing.JButton();
 
         jlabel1.setText("nombre_producto");
 
@@ -183,24 +180,24 @@ public class VistaProductos extends javax.swing.JPanel {
             }
         });
 
-        txtGuardar.setText("Guardar");
-        txtGuardar.addActionListener(new java.awt.event.ActionListener() {
+        BtnGuardar.setText("Guardar");
+        BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGuardarActionPerformed(evt);
+                BtnGuardarActionPerformed(evt);
             }
         });
 
-        txtActualizar.setText("Actualizar");
-        txtActualizar.addActionListener(new java.awt.event.ActionListener() {
+        BtnActualizar.setText("Actualizar");
+        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActualizarActionPerformed(evt);
+                BtnActualizarActionPerformed(evt);
             }
         });
 
-        txtEliminar.setText("Eliminar");
-        txtEliminar.addActionListener(new java.awt.event.ActionListener() {
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEliminarActionPerformed(evt);
+                BtnEliminarActionPerformed(evt);
             }
         });
 
@@ -236,9 +233,16 @@ public class VistaProductos extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -251,9 +255,14 @@ public class VistaProductos extends javax.swing.JPanel {
         jLabel1.setText("Categoria");
 
         ComboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventoComboCategorias(evt);
+            }
+        });
 
-        txtLimpiar.setText("Limpiar");
-        txtLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        BtnLimpiar.setText("Limpiar");
+        BtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnLimpiar(evt);
             }
@@ -304,13 +313,13 @@ public class VistaProductos extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(BtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -346,14 +355,14 @@ public class VistaProductos extends javax.swing.JPanel {
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
@@ -381,48 +390,42 @@ public class VistaProductos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImagenActionPerformed
 
-    private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
+    private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         String nombreProducto = txtNombreProducto.getText();
         String descripcionProducto = txtDescripcionProducto.getText();
         int idCategoria = idCategoriaSeleccionada;
-
-        // Cambiado para obtener el stock correctamente
-        int stock = Integer.parseInt(txtStock.getText());
         float precioUnitario = Float.parseFloat(txtPrecioUnitario.getText());
+        int stock = Integer.parseInt(txtPrecioUnitario.getText());
         String imagen = txtImagen.getText();
 
-           if (!nombreProducto.isEmpty() && !descripcionProducto.isEmpty() && precioUnitario >= 0 && stock >= 0 && idCategoria != -1) {
-                try {
+        if (!nombreProducto.isEmpty()
+                && !descripcionProducto.isEmpty()
+                && precioUnitario >= 0
+                && stock >= 0) {
+            try {
                 productoControlador.crearProducto(
                         nombreProducto,
                         descripcionProducto,
                         idCategoria,
                         precioUnitario,
                         stock,
-                        imagen
-                );
+                        imagen);
                 limpiar();
                 cargarDatosTabla();
                 cargarCategorias();
             } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
+                javax.swing.JOptionPane.showMessageDialog(this,
                         "Error en los datos: " + e.getMessage(),
-                        "Error",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                        "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
+            javax.swing.JOptionPane.showMessageDialog(this,
                     "Por favor, llene todos los campos obligatorios correctamente.",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-            );
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_txtGuardarActionPerformed
+    }//GEN-LAST:event_BtnGuardarActionPerformed
 
-    private void txtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActualizarActionPerformed
+    private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
         String nombreProducto = txtNombreProducto.getText();
         String descripcionProducto = txtDescripcionProducto.getText();
         int idCategoria = idCategoriaSeleccionada;
@@ -430,7 +433,12 @@ public class VistaProductos extends javax.swing.JPanel {
         int stock = Integer.parseInt(txtStock.getText());
         String imagen = txtImagen.getText();
 
-        if (idProductoSeleccionado != null && !nombreProducto.isEmpty() && !descripcionProducto.isEmpty() && idCategoria >= 0 && stock >= 0) {
+        if (idProductoSeleccionado != null
+                && !nombreProducto.isEmpty()
+                && !descripcionProducto.isEmpty()
+                && idCategoria >= 0
+                && stock >= 0) {
+
             try {
                 productoControlador.actualizarProducto(
                         idProductoSeleccionado,
@@ -444,38 +452,31 @@ public class VistaProductos extends javax.swing.JPanel {
                 cargarDatosTabla(); // Vuelve a cargar los datos en la tabla después de actualizar
                 limpiar(); // Limpia los campos
             } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
+                javax.swing.JOptionPane.showMessageDialog(this,
                         "Error en los datos: " + e.getMessage(),
-                        "Error",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                        "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
+            javax.swing.JOptionPane.showMessageDialog(this,
                     "Por favor, llene todos los campos obligatorios.",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-            );
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_txtActualizarActionPerformed
 
-    private void txtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEliminarActionPerformed
+    }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         int filaSeleccionada = TablaProductos.getSelectedRow();
         if (filaSeleccionada != -1) {
             int idProducto = (int) TablaProductos.getValueAt(filaSeleccionada, 0);
             productoControlador.eliminarProducto(idProducto);
             cargarDatosTabla();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
+            javax.swing.JOptionPane.showMessageDialog(this,
                     "Selecciona una fila para eliminar.",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-            );
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_txtEliminarActionPerformed
+
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         // TODO add your handling code here:
@@ -490,6 +491,7 @@ public class VistaProductos extends javax.swing.JPanel {
         if (evt.getClickCount() == 2) {
             // Obtener la fila seleccionada
             int filaSeleccionada = TablaProductos.getSelectedRow();
+
             if (filaSeleccionada != -1) {
                 // Obtener el modelo de la tabla
                 DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
@@ -510,15 +512,16 @@ public class VistaProductos extends javax.swing.JPanel {
                 txtStock.setText(stock.toString());
                 txtImagen.setText(imagen);
 
-                // Seleccionar la categoria correspondiente en el combo
-                seleccionarCategoriaEnConbo(idCategoria);
+                // Seleccionar la categoría correspondiente en el combo
+                seleccionarCategoriaEnCombo(idCategoria);
                 idCategoriaSeleccionada = idCategoria;
 
                 // Deshabilitar el botón Eliminar y Guardar si es necesario
-                txtEliminar.setEnabled(false);
-                txtGuardar.setEnabled(false);
+                BtnEliminar.setEnabled(false);
+                BtnGuardar.setEnabled(false);
             }
         }
+
     }//GEN-LAST:event_tablaProductos
 
     private void BuscarProducto(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscarProducto
@@ -556,8 +559,40 @@ public class VistaProductos extends javax.swing.JPanel {
         limpiar();
     }//GEN-LAST:event_BtnLimpiar
 
+    private void eventoComboCategorias(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventoComboCategorias
+        // TODO add your handling code here:
+        
+        ComboCategoria.addActionListener(e -> {
+        // Obtener el índice seleccionado
+        int indiceSeleccionado = ComboCategoria.getSelectedIndex();
+
+        if (indiceSeleccionado >= 0) { // Verificar que se haya seleccionado algo
+            try {
+                // Obtener la lista de categorías desde el controlador o memoria
+                List<Categoria> categorias = categoriaControlador.obtenerTodasCategorias();
+
+                // Obtener el objeto de categoría correspondiente al índice seleccionado
+                Categoria categoriaSeleccionada = categorias.get(indiceSeleccionado);
+
+                // Actualizar la variable global con el ID de la categoría seleccionada
+                idCategoriaSeleccionada = categoriaSeleccionada.getIdCategoria();
+
+                // Mostrar el ID seleccionado en la consola (puedes quitar esta línea)
+                System.out.println("ID de la categoría seleccionada: " + idCategoriaSeleccionada);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al seleccionar categoría: " + ex.getMessage());
+            }
+        }
+    });
+
+    }//GEN-LAST:event_eventoComboCategorias
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnActualizar;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnGuardar;
+    private javax.swing.JButton BtnLimpiar;
     private javax.swing.JButton Buscar;
     private javax.swing.JComboBox<String> ComboCategoria;
     private javax.swing.JTable TablaProductos;
@@ -568,13 +603,9 @@ public class VistaProductos extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabel1;
     private javax.swing.JLabel jlabel2;
-    private javax.swing.JButton txtActualizar;
     private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JTextField txtDescripcionProducto;
-    private javax.swing.JButton txtEliminar;
-    private javax.swing.JButton txtGuardar;
     private javax.swing.JTextField txtImagen;
-    private javax.swing.JButton txtLimpiar;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtPrecioUnitario;
     private javax.swing.JTextField txtStock;
